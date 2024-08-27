@@ -159,3 +159,56 @@ void incluirCliente(std::vector<Cliente>& clientes, const std::vector<Cidade>& c
     }
 }
 //Funções de Exclusão
+bool clienteTemVendas(const std::vector<Venda>& vendas, int codigo_cliente) {
+    return std::any_of(vendas.begin(), vendas.end(), [codigo_cliente](const Venda& v) {
+        return v.codigo_cliente == codigo_cliente;
+    });
+}
+
+void excluirCliente(std::vector<Cliente>& clientes, const std::vector<Venda>& vendas) {
+    int codigo_cliente;
+    std::cout << "Digite o código do cliente a ser excluído: ";
+    std::cin >> codigo_cliente;
+
+    auto cliente = std::find_if(clientes.begin(), clientes.end(), [codigo_cliente](const Cliente& c) {
+        return c.codigo_cliente == codigo_cliente;
+    });
+
+    if (cliente != clientes.end()) {
+        if (clienteTemVendas(vendas, codigo_cliente)) {
+            std::cout << "Não é possível excluir o cliente. Ele possui vendas cadastradas." << std::endl;
+        } else {
+            clientes.erase(cliente);
+            std::cout << "Cliente excluído com sucesso!" << std::endl;
+        }
+    } else {
+        std::cout << "Cliente não encontrado!" << std::endl;
+    }
+}
+
+bool guiaTemPacotes(const std::vector<Pacote>& pacotes, int codigo_guia) {
+    return std::any_of(pacotes.begin(), pacotes.end(), [codigo_guia](const Pacote& p) {
+        return p.codigo_guia == codigo_guia;
+    });
+}
+
+void excluirGuia(std::vector<Guia>& guias, const std::vector<Pacote>& pacotes) {
+    int codigo_guia;
+    std::cout << "Digite o código do guia a ser excluído: ";
+    std::cin >> codigo_guia;
+
+    auto guia = std::find_if(guias.begin(), guias.end(), [codigo_guia](const Guia& g) {
+        return g.codigo_guia == codigo_guia;
+    });
+
+    if (guia != guias.end()) {
+        if (guiaTemPacotes(pacotes, codigo_guia)) {
+            std::cout << "Não é possível excluir o guia. Ele possui pacotes cadastrados." << std::endl;
+        } else {
+            guias.erase(guia);
+            std::cout << "Guia excluído com sucesso!" << std::endl;
+        }
+    } else {
+        std::cout << "Guia não encontrado!" << std::endl;
+    }
+}
