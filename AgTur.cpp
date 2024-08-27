@@ -309,3 +309,60 @@ void incluirVenda(std::vector<Venda>& vendas, std::vector<Pacote>& pacotes, cons
         std::cout << "Cliente não encontrado!" << std::endl;
     }
 }
+//Funções de Consulta e Exibição
+void consultarPacote(const std::vector<Pacote>& pacotes, const std::vector<Guia>& guias) {
+    int codigo_pacote;
+    std::cout << "Digite o código do pacote a ser consultado: ";
+    std::cin >> codigo_pacote;
+
+    auto pacote = std::find_if(pacotes.begin(), pacotes.end(), [codigo_pacote](const Pacote& p) {
+        return p.codigo_pacote == codigo_pacote;
+    });
+
+    if (pacote != pacotes.end()) {
+        auto guia = std::find_if(guias.begin(), guias.end(), [pacote](const Guia& g) {
+            return g.codigo_guia == pacote->codigo_guia;
+        });
+        if (guia != guias.end()) {
+            std::cout << "Código: " << pacote->codigo_pacote << ", Descrição: " << pacote->descricao << ", Guia: " << guia->nome << ", Valor por pessoa: " << pacote->valor_por_pessoa << ", Total participantes: " << pacote->total_participantes << ", Valor total arrecadado: " << (pacote->valor_por_pessoa * pacote->total_participantes) << std::endl;
+        } else {
+            std::cout << "Guia não encontrado!" << std::endl;
+        }
+    } else {
+        std::cout << "Pacote não encontrado!" << std::endl;
+    }
+}
+
+void exibirPacotesCompletamenteVendidos(const std::vector<Pacote>& pacotes, const std::vector<Guia>& guias) {
+    for (const auto& pacote : pacotes) {
+        if (pacote.total_participantes == pacote.quant_max_participantes) {
+            auto guia = std::find_if(guias.begin(), guias.end(), [pacote](const Guia& g) {
+                return g.codigo_guia == pacote.codigo_guia;
+            });
+            if (guia != guias.end()) {
+                std::cout << "Código: " << pacote.codigo_pacote << ", Descrição: " << pacote.descricao << ", Guia: " << guia->nome << ", Valor total arrecadado: " << (pacote.valor_por_pessoa * pacote.total_participantes) << std::endl;
+            } else {
+                std::cout << "Guia não encontrado!" << std::endl;
+            }
+        }
+    }
+}
+
+void exibirVendas(const std::vector<Venda>& vendas, const std::vector<Cliente>& clientes, const std::vector<Pacote>& pacotes) {
+    double valor_total_vendido = 0.0;
+    for (const auto& venda : vendas) {
+        auto cliente = std::find_if(clientes.begin(), clientes.end(), [venda](const Cliente& c) {
+            return c.codigo_cliente == venda.codigo_cliente;
+        });
+        auto pacote = std::find_if(pacotes.begin(), pacotes.end(), [venda](const Pacote& p) {
+            return p.codigo_pacote == venda.codigo_pacote;
+        });
+        if (cliente != clientes.end() && pacote != pacotes.end()) {
+            std::cout << "Código: " << venda.codigo_venda << ", Cliente: " << cliente->nome << ", Descrição do pacote: " << pacote->descricao << ", Quantidade de pessoas: " << venda.quantidade_pessoas << ", Valor total: " << venda.valor_total << std::endl;
+            valor_total_vendido += venda.valor_total;
+        } else {
+            std::cout << "Cliente ou pacote não encontrado!" << std::endl;
+        }
+    }
+    std::cout << "Valor total vendido: " << valor_total_vendido << std::endl;
+}
