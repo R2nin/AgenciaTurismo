@@ -373,3 +373,84 @@ void reorganizarClientes(std::vector<Cliente>& clientes) {
     });
     std::cout << "Tabela de clientes reorganizada!" << std::endl;
 }
+//Menu Principal
+void exibirMenu() {
+    std::cout << "Menu de Opções:" << std::endl;
+    std::cout << "1. Ler Países" << std::endl;
+    std::cout << "2. Ler Cidades" << std::endl;
+    std::cout << "3. Incluir Guia" << std::endl;
+    std::cout << "4. Incluir Cliente" << std::endl;
+    std::cout << "5. Excluir Cliente" << std::endl;
+    std::cout << "6. Excluir Guia" << std::endl;
+    std::cout << "7. Incluir Pacote" << std::endl;
+    std::cout << "8. Incluir Venda" << std::endl;
+    std::cout << "9. Consultar Pacote" << std::endl;
+    std::cout << "10. Exibir Pacotes Completamente Vendidos" << std::endl;
+    std::cout << "11. Exibir Vendas" << std::endl;
+    std::cout << "12. Reorganizar Clientes" << std::endl;
+    std::cout << "0. Sair" << std::endl;
+}
+
+int main() {
+    std::vector<Pais> paises;
+    std::vector<Cidade> cidades;
+    std::vector<Guia> guias;
+    std::vector<Cliente> clientes;
+    std::vector<Pacote> pacotes;
+    std::vector<Venda> vendas;
+
+    int opcao;
+    do {
+        exibirMenu();
+        std::cout << "Escolha uma opção: ";
+        std::cin >> opcao;
+        std::cin.ignore();
+
+        switch (opcao) {
+            case 1:
+                lerPaises(paises);
+                break;
+            case 2:
+                lerCidades(cidades);
+                break;
+            case 3:
+                incluirGuia(guias, cidades, paises);
+                break;
+            case 4:
+                incluirCliente(clientes, cidades, paises);
+                break;
+            case 5:
+                excluirCliente(clientes, vendas);
+                break;
+            case 6:
+                excluirGuia(guias, pacotes);
+                break;
+            case 7:
+                incluirPacote(pacotes, guias, cidades, paises);
+                break;
+            case 8:
+                incluirVenda(vendas, pacotes, clientes, cidades, paises);
+                break;
+            case 9:
+                consultarPacote(pacotes, guias);
+                break;
+            case 10:
+                exibirPacotesCompletamenteVendidos(pacotes, guias);
+                break;
+            case 11:
+                exibirVendas(vendas, clientes, pacotes);
+                break;
+            case 12:
+                reorganizarClientes(clientes);
+                break;
+            case 0:
+                std::cout << "Saindo do programa..." << std::endl;
+                break;
+            default:
+                std::cout << "Opção inválida!" << std::endl;
+                break;
+        }
+    } while (opcao != 0);
+
+    return 0;
+}
