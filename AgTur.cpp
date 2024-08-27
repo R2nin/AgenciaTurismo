@@ -366,3 +366,10 @@ void exibirVendas(const std::vector<Venda>& vendas, const std::vector<Cliente>& 
     }
     std::cout << "Valor total vendido: " << valor_total_vendido << std::endl;
 }
+// Função de Reorganização
+void reorganizarClientes(std::vector<Cliente>& clientes) {
+    std::sort(clientes.begin(), clientes.end(), [](const Cliente& a, const Cliente& b) {
+        return a.codigo_cliente < b.codigo_cliente;
+    });
+    std::cout << "Tabela de clientes reorganizada!" << std::endl;
+}
