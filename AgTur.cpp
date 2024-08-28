@@ -122,7 +122,49 @@ bool clienteExiste(const std::vector<Cliente>& clientes, int codigo_cliente) {
         return c.codigo_cliente == codigo_cliente;
     });
 }
+bool clienteExiste(const std::vector<Cliente>& clientes, int codigo_cliente) {
+    return std::any_of(clientes.begin(), clientes.end(), [codigo_cliente](const Cliente& c) {
+        return c.codigo_cliente == codigo_cliente;
+    });
+}
 
+void incluirCliente(std::vector<Cliente>& clientes, std::vector<Cidade>& cidades, std::vector<Pais>& paises) {
+    // Adicionando dados de exemplo
+    clientes = {
+        {1, "Cliente 1", "Endereço 1"},
+        {2, "Cliente 2", "Endereço 2"},
+        {3, "Cliente 3", "Endereço 3"},
+        {4, "Cliente 4", "Endereço 4"},
+        {5, "Cliente 5", "Endereço 5"}
+    };
+
+    cidades = {
+        {1, "Cidade 1", "UF1", 1},
+        {2, "Cidade 2", "UF2", 2},
+        {3, "Cidade 3", "UF3", 3},
+        {4, "Cidade 4", "UF4", 4},
+        {5, "Cidade 5", "UF5", 5}
+    };
+
+    paises = {
+        {1, "Pais 1"},
+        {2, "Pais 2"},
+        {3, "Pais 3"},
+        {4, "Pais 4"},
+        {5, "Pais 5"}
+    };
+
+    int codigo_cliente, codigo_cidade;
+    std::string nome, endereco;
+    std::cout << "Digite o código do cliente: ";
+    std::cin >> codigo_cliente;
+    if (clienteExiste(clientes, codigo_cliente)) {
+        std::cout << "Código de cliente já existe!" << std::endl;
+        return;
+    }
+
+    // Resto do código da função...
+}
 void incluirCliente(std::vector<Cliente>& clientes, const std::vector<Cidade>& cidades, const std::vector<Pais>& paises) {
     int codigo_cliente, codigo_cidade;
     std::string nome, endereco;
