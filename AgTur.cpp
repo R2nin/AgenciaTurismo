@@ -122,11 +122,6 @@ bool clienteExiste(const std::vector<Cliente>& clientes, int codigo_cliente) {
         return c.codigo_cliente == codigo_cliente;
     });
 }
-bool clienteExiste(const std::vector<Cliente>& clientes, int codigo_cliente) {
-    return std::any_of(clientes.begin(), clientes.end(), [codigo_cliente](const Cliente& c) {
-        return c.codigo_cliente == codigo_cliente;
-    });
-}
 
 void incluirCliente(std::vector<Cliente>& clientes, std::vector<Cidade>& cidades, std::vector<Pais>& paises) {
     // Adicionando dados de exemplo
